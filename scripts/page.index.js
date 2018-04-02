@@ -23,6 +23,7 @@
         return mua;
     }());
     var musiccontrols = $("#music-controls");
+    var btnPlay = $("#btnPlay");
     if (MobileUA.SMART_PHONE) {
         musiccontrols.height(200);
     }
@@ -75,25 +76,34 @@
             audio = document.getElementById("audioPlay");
             blAudio = true;
         }
-
+        var uiPlay = function () {
+            btnPlay.removeClass("fa-play");
+            btnPlay.addClass("fa-pause");
+            btnPlay.attr("data-action", "pause");
+        }
+        var uiPause = function () {
+            btnPlay.addClass("fa-play");
+            btnPlay.removeClass("fa-pause");
+            btnPlay.attr("data-action", "play");
+        }
         var ino = {};
         ino.play = function () {
             try {
                 audio.play();
-                var self = $("#btnPlay");
-                self.removeClass("fa-play");
-                self.addClass("fa-pause");
-                self.attr("data-action", "pause");
-            } catch (e) { }
+                uiPlay();
+            } catch (e) {
+                console.log(e);
+                uiPause();
+            }
         };
         ino.pause = function () {
             try {
                 audio.pause();
-                var self = $("#btnPlay");
-                self.addClass("fa-play");
-                self.removeClass("fa-pause");
-                self.attr("data-action", "play");
-            } catch (e) { }
+                
+            } catch (e) {
+                console.log(e);
+                uiPlay();
+            }
         };
 
         ino.play();
