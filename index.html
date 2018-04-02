@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>小熊熊-生日快乐</title>
     <link href="css/index.css" rel="stylesheet" />
+    <link href="content/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="wrapper">
@@ -56,13 +57,15 @@
 
         </ul>
     </div>
-    <audio id="eplay">
-        <source src="resource/music/Asher Book-Try.mp3" />
-    </audio>
+
+    <div id="music-controls" class="music-controls">
+        <div class="play-controls">
+            <a id="btnPlay" href="javascript:void(0);" data-action="play" class="btn_play fa fa-play"></a>
+        </div>
+    </div>
+
+    <script src="scripts/jquery-1.11.1.min.js"></script>
     <script src="scripts/love.js"></script>
-    <script type="text/javascript">
-        var audio = document.getElementById("eplay");
-        audio.play();
-    </script>
+    <script src="scripts/page.index.js"></script>
 </body>
 </html>
