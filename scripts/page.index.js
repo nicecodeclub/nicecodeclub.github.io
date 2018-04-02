@@ -99,7 +99,7 @@
         ino.pause = function () {
             try {
                 audio.pause();
-                
+                uiPause();
             } catch (e) {
                 console.log(e);
                 uiPlay();
