@@ -24,6 +24,7 @@
     }());
     var musiccontrols = $("#music-controls");
     var btnPlay = $("#btnPlay");
+    var loadcompleted = false;
     var timeoutHide;
     if (MobileUA.SMART_PHONE) {
         musiccontrols.height(200);
@@ -47,6 +48,7 @@
         };
         var mcShow = false;
         document.onmousemove = function (ev) {
+            if (!loadcompleted) return;
             if (winH + scrollT - mousePositionY(ev) <= 100) {
                 if (!mcShow) {
                     mcShow = true;
@@ -85,11 +87,14 @@
             audio = document.getElementById("audioPlay");
             audio.addEventListener("canplaythrough", function () {
                 ino.play();
+                loadcompleted = true;
                 $("#music-loading").hide();
-                musiccontrols.fadeIn();
-                timeoutHide = setTimeout(function () {
-                    musiccontrols.fadeOut();
-                }, 2000);
+                $("#music-play").show();
+                if (!MobileUA.SMART_PHONE) {
+                    timeoutHide = setTimeout(function () {
+                        musiccontrols.fadeOut();
+                    }, 2000);
+                }
             }, false);
             audio.addEventListener('ended', function () {
                 uiPlay();

@@ -1,5 +1,5 @@
 ﻿* { margin: 0; }
-body { background-color: #f4c7e3 ;/*#ffe9f5;*/ }
+body { background-color: #438EB9; /*#ffe9f5;#438EB9;#f4c7e3;*/ }
 .wrapper { width: 960px; margin: 0 auto; }
     .wrapper li { position: relative; width: 280px; height: 280px; list-style: none; margin: 5px; display: inline-block; background: #fff; }
 .picBox { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
