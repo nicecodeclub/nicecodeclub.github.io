@@ -24,14 +24,15 @@
     }());
     var musiccontrols = $("#music-controls");
     var btnPlay = $("#btnPlay");
+    var timeoutHide;
     if (MobileUA.SMART_PHONE) {
         musiccontrols.height(200);
+        var winH = $(window).height();
+        $("#wrapper").css("margin-top", (winH / 4 - 100) + "px");
     }
     else {
         musiccontrols.height(80);
-        var timeoutHide = setTimeout(function () {
-            musiccontrols.fadeOut();
-        }, 2000);
+
         var winH = $(window).height();
         var pageH = $(document.body).height();
         var scrollT = 0;
@@ -61,7 +62,15 @@
             }
         }
     }
-
+    $("#btnPlay").on("click", function () {
+        var self = $(this);
+        if (self.attr("data-action") == "play") {
+            playSound.play();
+        }
+        else {
+            playSound.pause();
+        }
+    });
     var playSound = function () {
         var blAudio = false;
         var audio;
@@ -72,28 +81,42 @@
             audio = document.embedPlay;
         }
         else {
-            $("body").append("<audio id='audioPlay' src='" + mp3Url + "' hidden='true'>");
+            $("body").append("<audio id='audioPlay' src='" + mp3Url + "' hidden='true' >");
             audio = document.getElementById("audioPlay");
+            audio.addEventListener("canplaythrough", function () {
+                ino.play();
+                $("#music-loading").hide();
+                musiccontrols.fadeIn();
+                timeoutHide = setTimeout(function () {
+                    musiccontrols.fadeOut();
+                }, 2000);
+            }, false);
+            audio.addEventListener('ended', function () {
+                uiPlay();
+            }, false);
+            audio.loop = true;
+            audio.load();
             blAudio = true;
         }
         var uiPlay = function () {
-            btnPlay.removeClass("fa-play");
-            btnPlay.addClass("fa-pause");
+            btnPlay.removeClass("fa-play-circle-o");
+            btnPlay.addClass("fa-pause-circle-o");
             btnPlay.attr("data-action", "pause");
         }
         var uiPause = function () {
-            btnPlay.addClass("fa-play");
-            btnPlay.removeClass("fa-pause");
+            btnPlay.addClass("fa-play-circle-o");
+            btnPlay.removeClass("fa-pause-circle-o");
             btnPlay.attr("data-action", "play");
         }
         var ino = {};
         ino.play = function () {
             try {
-                audio.play();
-                uiPlay();
+                if (audio.paused) {
+                    audio.play();
+                    uiPlay();
+                }
             } catch (e) {
                 console.log(e);
-                uiPause();
             }
         };
         ino.pause = function () {
@@ -102,21 +125,12 @@
                 uiPause();
             } catch (e) {
                 console.log(e);
-                uiPlay();
             }
         };
 
-        ino.play();
+
         return ino;
     }();
-    $("#btnPlay").on("click", function () {
-        var self = $(this);
-        if (self.attr("data-action") == "play") {
-            playSound.play();
-        }
-        else {
-            playSound.pause();
-        }
-    });
     
+
 });
