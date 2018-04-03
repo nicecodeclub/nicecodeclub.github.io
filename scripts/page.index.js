@@ -29,7 +29,7 @@
     if (MobileUA.SMART_PHONE) {
         musiccontrols.height(200);
         var winH = $(window).height();
-        $("#wrapper").css("margin-top", (winH / 4 - 100) + "px");
+        $("#wrapper").css("margin-top", (winH / 4 - 108) + "px");
     }
     else {
         musiccontrols.height(80);
@@ -132,7 +132,6 @@
                 console.log(e);
             }
         };
-
 
         return ino;
     }();
